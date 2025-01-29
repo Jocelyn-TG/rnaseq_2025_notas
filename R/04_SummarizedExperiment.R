@@ -60,14 +60,17 @@ colData(rse)
 ## ----rse_exercise---------------------------------------------
 ## Comando 1
 rse[1:2, ]
+# Este comando de aqui enseña las primeras 2 filas de todos los datos de rse
+
 ## Comando 2
 rse[, c("A", "D", "F")]
+# Este comando de aqui enseña todas las filas de las columnas A, D y F
 
 
 ## ----isee_basic, eval = FALSE---------------------------------
 # ## Explora el objeto rse de forma interactiva
-# library("iSEE")
-# iSEE::iSEE(rse)
+library("iSEE")
+iSEE::iSEE(rse)
 
 
 ## ----download_sce_layer---------------------------------------
@@ -80,5 +83,14 @@ lobstr::obj_size(sce_layer)
 
 
 ## ----explore_sce_layer, eval = FALSE--------------------------
-# iSEE::iSEE(sce_layer)
+iSEE::iSEE(sce_layer)
 
+
+# Resultados
+
+# Los que mas se parecen son:
+ENSG00000197971 # MBP
+ENSG00000168314 # MOBP
+
+# Su expresion mas alta es en la capa
+WM
