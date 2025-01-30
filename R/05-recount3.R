@@ -5,20 +5,26 @@ library("recount3")
 
 ## ----'quick_example'------------------------------------------
 ## Revisemos todos los proyectos con datos de humano en recount3
-human_projects <- available_projects()
+human_projects <- available_projects()  ## Este es un data.frame de 8742 filas y 6 columnas
 
 ## Encuentra tu proyecto de interés. Aquí usaremos
 ## SRP009615 de ejemplo
 proj_info <- subset(
     human_projects,
     project == "SRP009615" & project_type == "data_sources"
-)
+)    ## Este es un data.frame de 1 fila y 6 columnas (subset del original)
+
 ## Crea un objeto de tipo RangedSummarizedExperiment (RSE)
 ## con la información a nivel de genes
 rse_gene_SRP009615 <- create_rse(proj_info)
 ## Explora el objeto RSE
 rse_gene_SRP009615
-
+# Ver informacion sobre su creacion
+metadata(rse_gene_SRP009615)
+# Ver objeto entero de info de los genes
+rowRanges(rse_gene_SRP009615)
+# Ver informacion general de los genes 
+rowData(rse_gene_SRP009615)
 
 ## ----"interactive_display", eval = FALSE----------------------
 # ## Explora los proyectos disponibles de forma interactiva
@@ -46,3 +52,6 @@ colData(rse_gene_SRP009615)[
     ,
     grepl("^sra_attribute", colnames(colData(rse_gene_SRP009615)))
 ]
+
+##---------"Ejercicio"-------------------------------------------
+iSEE::iSEE(rse_gene_SRP009615)
