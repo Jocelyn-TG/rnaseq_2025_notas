@@ -44,6 +44,50 @@ app <- ExploreModelMatrix::ExploreModelMatrix(
 )
 if (interactive()) shiny::runApp(app)
 
+## --------Ejemplo---------------------------------------
+
+(sampleData <- data.frame(
+  Response = rep(c("Resistant", "Sensitive"), c(12, 18)),
+  Patient = factor(rep(c(1:6, 8, 11:18), each = 2)),
+  Treatment = factor(rep(c("pre","post"), 15)), 
+  ind.n = factor(rep(c(1:6, 2, 5:12), each = 2)))) # Visualizar el diseño
+
+vd <- ExploreModelMatrix::VisualizeDesign(
+  sampleData = sampleData,
+  designFormula = ~ Response + Response:ind.n + Response:Treatment,
+  textSizeFitted = 3
+)
+cowplot::plot_grid(plotlist = vd$plotlist, ncol = 1)
+
+
+mat3 <- with(sampleData, 
+             model.matrix(~ Response + Response:ind.n + Response:Treatment))
+
+app2 <- ExploreModelMatrix::ExploreModelMatrix(
+  sampleData = sampleData,
+  designFormula = ~ Response + Response:ind.n + Response:Treatment
+)
+if (interactive()) shiny::runApp(app2)
+
+## ----Ejemplo.2------------------------------------------------
+
+(sampleData = data.frame(
+  condition = factor(rep(c("ctrl_minus", "ctrl_plus", 
+                           "ko_minus", "ko_plus"), 3)),
+  batch = factor(rep(1:6, each = 2))))
+
+vd <- ExploreModelMatrix::VisualizeDesign(sampleData = sampleData,
+                      designFormula = ~ 0 + batch + condition, 
+                      textSizeFitted = 4, lineWidthFitted = 20, 
+                      dropCols = "conditionko_minus")
+cowplot::plot_grid(plotlist = vd$plotlist, ncol = 1)
+
+app3 <- ExploreModelMatrix::ExploreModelMatrix(
+  sampleData = sampleData,
+  designFormula = ~ 0 + batch + condition
+)
+if (interactive()) shiny::runApp(app3)
+
 
 ## ----download_SRP045638---------------------------------------
 library("recount3")
